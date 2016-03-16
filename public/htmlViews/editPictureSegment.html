@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EditHtmlSegment</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+<div class="container">
+    <a href="/">(Back to main)</a><br><a id="BackToDoc">(Back to document)</a>
+    <h1>Here is How This Segment Looks Now:</h1>
+    <div id="oldContent"></div>
+    <br>
+    <br>
+    <h1>What Do You Want To Change About It?</h1>
+    <br>
+    <br>
+    <form method="post" enctype="multipart/form-data" id="edit-segment">
+        <label><input type="text" name="title" id="title" disabled> Segment Title</label>
+        <br>
+        <label>Select a Picture (leave empty to keep the same image)</label>
+        <br>
+        <input type="file" name="displayImage">
+        <br>
+        <label>Type in a Caption</label>
+        <br>
+        <input type="text" name="displayText" id="displayText">
+        <br>
+        <label>Choose Layout</label>
+        <br>
+        <select name="pictureSegmentLayout" id="pictureSegmentLayout">
+            <option value="1">Text on top of picture</option>
+            <option value="2">Picture on top of text</option>
+            <option value="3">Side by side</option>
+        </select>
+        <br><input type="hidden" name="docId" id="docId" value="569a040fd0b68d201f85b1b7"><br>
+        <input type="hidden" name="picseg" id="picseg" value="true">
+        <div class="actions"><input type="submit" value="Update Segment"></div>
+    </form>
+</div>
+</body>
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.ckeditor.com/4.5.6/standard/ckeditor.js"></script>
+<script src="./js/utils.js"></script>
+<script>
+    $( document ).ready(function(){
+        $.get("/editAssignedSegment/" + getParameterByName('id'),function(data, status){
+            var editable = JSON.parse(data).editable;
+            $('#oldContent').html(editable.content);
+            $('#title').val(editable.title);
+            $('#displayText').val($('#oldContent label').html())
+            $('#pictureSegmentLayout').val(editable.pictureSegmentLayout);
+            $('#BackToDoc').attr('href', '/assignedDoc/' + editable.docid);
+            $('#edit-segment').attr('action', '/editAssignedSegment/' + editable.assgnid);
+            $('#docId').val(editable.docid);
+        });
+    });
+</script>
+</html>

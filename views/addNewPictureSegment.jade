@@ -1,0 +1,42 @@
+extends layout
+
+block content
+  .container
+    a(href="/") (Back to main)
+    br
+    if(!subSegment)
+      a(href="/viewOwnedDoc.html?id=" + doc.id ) (Back to document)
+    else
+      a(href="/viewOwnedDoc.html?id=" + doc.document.id ) (Back to document)
+    if(!wedone)
+      h1 Adding New Segment to #{doc.title}
+      form(method="post", enctype="multipart/form-data", action="/addNewPictureSegment")
+        label
+          input(type="text", name="title")
+          |  Segment Title
+        br
+        label Select a Picture
+        br
+        input(type="file", name="displayImage")
+        br
+        label Type in a Caption
+        br
+        input(type="text", name="displayText")
+        br
+        label Choose Layout
+        br
+        select(name="pictureSegmentLayout")
+          option(value='1') Text on top of picture
+          option(value='2') Picture on top of text
+          option(value='3') Side by side
+        br
+        if(!subSegment)
+          input(type="hidden" name="docId" value="#{doc.id}")
+        else
+          input(type="hidden" name="segId" value="#{doc.id}")
+          input(type="hidden" name="docId" value="#{doc.document.id}")
+        br
+        div.actions
+          input(type="submit", value="Add Segment")
+    else
+      h1 Segment Added Successfully

@@ -1,0 +1,54 @@
+extends layout
+
+block content
+  .container
+    a(href="/") (Back to main)
+    br
+    a(href="/htmlViews/viewOwnedDoc/viewOwnedDoc.html?id=" + doc.id ) (Back to document)
+    if(!wedone)
+      h1 Adding New Segment to #{doc.title}
+        if(!subSegment && !sibSegment)
+          form(name="add-new-segment", method="post", action="/addNewSegmentToDoc/" + doc.id )
+            br
+            label
+              input(type="text", name="title")
+              |  Segment Title
+            br
+            br
+            if(!subSegment && !sibSegment)
+              input(type="hidden" name="docId" value="#{doc.id}")
+            else
+              input(type="hidden" name="segId" value="#{doc.id}")
+              input(type="hidden" name="docId" value="#{doc.document.id}")
+
+            if(sibSegment)
+              input(type="hidden" name="isSibling" value="true")
+            label Segment Body
+            textarea#editor1(name='editor1', rows='10', cols='80')
+            br
+            div.actions
+              input(type="submit", value="Add Segment")
+        else
+          form(name="add-new-segment", method="post", action="/addNewSegmentToDoc/" + doc.document.id )
+            br
+            label
+              input(type="text", name="title")
+              |  Segment Title
+            br
+            br
+            if(!subSegment && !sibSegment)
+              input(type="hidden" name="docId" value="#{doc.id}")
+            else
+              input(type="hidden" name="segId" value="#{doc.id}")
+              input(type="hidden" name="docId" value="#{doc.document.id}")
+
+            if(sibSegment)
+              input(type="hidden" name="isSibling" value="true")
+
+            label Segment Body
+            textarea#editor1(name='editor1', rows='10', cols='80')
+            br
+            div.actions
+              input(type="submit", value="Add Segment")
+    else
+      h1 Segment Added Successfully

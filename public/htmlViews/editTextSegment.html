@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EditHtmlSegment</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+<div class="container">
+    <a href="/">(Back to main)</a><br><a id="BackToDoc">(Back to document)</a>
+    <h1>
+        <label id="doctitle"></label>
+        <form name="edit-segment" id="edit-segment" method="post">
+            <br>
+            <label>
+                <input type="text" name="title" id="segtitle">
+                 Segment Title
+            </label>
+            <br>
+            <br>
+            <label>Segment Body </label>
+            <textarea id="editor1" name="editor1" rows="10" cols="80"></textarea>
+            <br>
+            <div class="actions"><input type="submit" value="Update Segment"></div>
+        </form>
+    </h1>
+</div>
+</body>
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.ckeditor.com/4.5.6/standard/ckeditor.js"></script>
+<script src="./js/utils.js"></script>
+<script>
+    $( document ).ready(function(){
+        CKEDITOR.replace('editor1');
+        var seg = getParameterByName('seg');
+        var addr, actionAddr;
+        if(seg){
+            addr = "/editSegment/" + getParameterByName('id');
+            actionAddr = '/editSegment/';
+        }
+        else{
+            addr = "/editAssignedSegment/" + getParameterByName('id');
+            actionAddr = '/editAssignedSegment/';
+        }
+        $.get(addr + "?ts=" + (new Date()).getTime(),function(data, status){
+            var editable = JSON.parse(data).editable;
+            $('#BackToDoc').remove();
+            $('#edit-segment').attr('action', actionAddr + editable.assgnid);
+            $('#doctitle').html("Editing: " + editable.doctitle);
+            $('#segtitle').val(editable.title);
+            if(getParameterByName("root") && getParameterByName("root") == "true"){
+                $("#segtitle").attr("disabled", "disabled");
+            }
+            CKEDITOR.instances.editor1.setData(editable.content, function () {
+                this.checkDirty();  // true
+            });
+        });
+    });
+</script>
+</html>

@@ -1,0 +1,10 @@
+extends layout
+
+block content
+    .container
+
+    a(href="/") (Back to main)
+    - var values = doclist;
+    ul
+        each val in values.length   ? values : ['There are no values']
+            li the document #[a(href=val.href) #{val.title}] was created by you on: #{val.created}

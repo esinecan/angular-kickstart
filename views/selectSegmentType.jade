@@ -1,0 +1,53 @@
+extends layout
+
+block content
+  .container
+    a(href="/") (Back to main)
+    br
+    if(!subSegment)
+        a(href="/viewOwnedDoc.html?id=" + doc.id ) (Back to document)
+    else
+        a(href="/viewOwnedDoc.html?id=" + doc.document.id ) (Back to document)
+    if(!wedone && subSegment)
+      h1 Adding New SubSegment to #{doc.title}
+      form(name="add-new-segment", method="post", action="/selectSubSegmentType")
+        br
+        label Select Segment Type
+        br
+        select(name="segmentType")
+          option(value='1') Add Text Segment
+          option(value='2') Add Picture Segment
+        br
+        input(type="hidden" name="docId" value="#{doc.id}")
+        br
+        div.actions
+          input(type="submit", value="Add Segment")
+    else if(!wedone && sibSegment)
+      h1 Adding New Sibling to #{doc.title}
+      form(name="add-new-segment", method="post", action="/selectSibSegmentType")
+        br
+        label Select Segment Type
+        br
+        select(name="segmentType")
+          option(value='1') Add Text Segment
+        br
+        input(type="hidden" name="docId" value="#{doc.id}")
+        br
+        div.actions
+          input(type="submit", value="Add Segment")
+    else if(!wedone && !subSegment)
+      h1 Adding New Segment to #{doc.title}
+      form(name="add-new-segment", method="post", action="/selectSegmentType")
+        br
+        label Select Segment Type
+        br
+        select(name="segmentType")
+          option(value='1') Add Text Segment
+          option(value='2') Add Picture Segment
+        br
+        input(type="hidden" name="docId" value="#{doc.id}")
+        br
+        div.actions
+          input(type="submit", value="Add Segment")
+    else
+      h1 Segment Added Successfully

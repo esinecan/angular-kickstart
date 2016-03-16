@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  .container
+    a(href="/") (Back to main)
+    - var segments = segs;
+    if  segments.length
+      ul
+        each val in segments.length   ? segments : ['There are no values']
+          li(style="list-style-type:none;") #[h3 Segment #{val.title} from #{val.doctitle}]
+            | #[a(href=val.acceptHref target="_blank") (Accept Segment)  ]
+            | #[a(href=val.rejectHref target="_blank")  (Reject Segment)]
+            | #[br]
+            | #[br]
+            | !{val.content}
+            | #[br]
+            | #[h4 With return notes: !{val.returnNotes}]
+    else
+      h3 There are no segments yet

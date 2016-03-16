@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+<div class="container">
+    <a href="/">(Back to main)</a>
+    <h1>
+        Adding New SubSegment to Assigned Document
+        <form name="add-new-segment" id="add-new-segment" method="post" action="/addSubSegmentToAssignment" >
+            <br>
+            <label>
+                <input type="text" name="title"> Segment Title
+            </label>
+            <br>
+            <br>
+            <label>Segment Body</label>
+            <textarea id="editor1" name="editor1" rows="10" cols="80"></textarea>
+            <br>
+            <div class="actions"><input type="submit" value="Add Segment"></div>
+        </form>
+    </h1>
+</div>
+</body>
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.ckeditor.com/4.5.6/standard/ckeditor.js"></script>
+<script>CKEDITOR.replace('editor1');</script>
+<script src="../js/utils.js"></script>
+<script src="addSubSegmentToAssignment.js"></script>
+</html>

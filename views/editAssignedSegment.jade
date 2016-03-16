@@ -1,0 +1,21 @@
+extends layout2
+- CKEDITOR.instances.editor1.setData(#{editable.content}, function () {this.checkDirty();});
+block content
+  .container
+    a(href="/") (Back to main)
+    br
+    a(href="/assignedDoc/" + editable.docid ) (Back to document)
+    if(!wedone)
+      h1 Editing: #{editable.doctitle}
+        form(name="edit-assigned-segment", method="post", action="/editAssignedSegment/" + editable.assgnid )
+          br
+          label #{editable.title}
+          br
+          br
+          label Segment Body
+          textarea#editor1(name='editor1', rows='10', cols='80' value='editable.content')
+          br
+          div.actions
+            input(type="submit", value="Add Segment")
+    else
+      h1 Segment Updated Successfully

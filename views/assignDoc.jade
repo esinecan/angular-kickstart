@@ -1,0 +1,18 @@
+extends layout
+
+block content
+	.container
+		h1 SEGMENT ASSIGNMENT
+		br
+		span
+			|Type in the name of the user you want to assign first segment of your document. (Note that only first segment can be assigned at this time. Check back after #110489482 is implemented)
+		br
+		form(name="assign-first-segment", method="post", action="/assign")
+			br
+			div.input
+				span.label Username
+				input(type="text", name="title")
+			br
+			input(type="hidden" name="target" value="#{segment}")
+			div.actions
+				input(type="submit", value="assign")

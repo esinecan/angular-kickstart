@@ -1,0 +1,46 @@
+extends layout
+
+block content
+    .container
+        div(style='display:none')
+            if(doc)
+                docid #{doc.id}
+            if(user)
+                user #{user}
+        if (!user)
+            a(href="/login") Login
+            br
+            a(href="/register") Register
+        if (user)
+            if(userMessage)
+                h1 Document assigned successfully
+                br
+            if(userCreateMessage)
+                h1 Document created successfully
+                br
+            form(name="ass  ign-first-segment", method="post", action="/assign")
+                br
+                p
+                    | You are currently logged in as
+                    b  #{user.username}
+                    a(href="/logout") (Logout)
+                br
+                p
+                    | View your returned assignments
+                    a(href="/returnedDocs")  here
+                br
+                p
+                    | View your assigned documents
+                    a(href="/assignedDocs") here
+                br
+                p
+                    | View your accepted assignments
+                    a(href="/acceptedDocs") here
+                br
+                p
+                    | View your owned documents
+                    a(href="/ownedDocs") here
+                br
+                p
+                    | Create new document
+                    a(href="/newDoc")  here

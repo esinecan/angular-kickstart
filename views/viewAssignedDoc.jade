@@ -1,0 +1,21 @@
+extends layout
+
+block content
+    .container
+        h1 #{doc.title}
+        a(href="/") (Back to main)
+        - var segments = segs;
+        if  segments.length
+            ul
+                each val in segments.length   ? segments : ['There are no values']
+                    li(style="list-style-type:none;") #[h3 #{val.segment.title}]
+                        | #[a(href=val.href target="_blank") (Edit Segment in New Tab)  ]
+                        | #[a(href=val.assignmentHref target="_blank")  (Return Segment)]
+                        | #[br]
+                        | #[br]
+                        | !{val.content}
+                        | #[br]
+                        if(val.rejectNotes)
+                            h4 Rejected with notes: !{val.rejectNotes}
+        else
+            h3 There are no segments yet

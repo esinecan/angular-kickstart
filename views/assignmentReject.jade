@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  .container
+    a(href="/") (Back to main)
+    br
+    h1 Rejecting the segment
+      form(name="add-new-segment", method="post", action="/returnedAssignmentReject/" + assignment)
+        br
+        label Reject Notes
+        textarea#editor1(name='returnnote', rows='10', cols='80')
+        br
+        div.actions
+          input(type="submit", value="Reject Segment")
